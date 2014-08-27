@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donwload</title>
+
+	<script>
+		String.prototype.replaceAll = function (find, replace) {
+		    var str = this;
+		    return str.replace(new RegExp(find, 'g'), replace);
+		};
+		function generaNome()
+		{
+			var fileNameUrl = document.getElementById("file_name_url").value;
+			var fileName = document.getElementById("file_name");
+			var ext = document.getElementById("ext");
+
+			if (fileNameUrl == "") {
+				alert("L'url del video deve essere presente");
+			} else {
+				
+				//-- Nome
+				var pos = fileNameUrl.lastIndexOf("/");
+				var fileNameStr = fileNameUrl.substr(pos + 1);
+				fileNameStr =  fileNameStr.replaceAll("_", " ");
+
+				//-- Trovo estensione
+				var extStr = fileNameStr.substr(fileNameStr.lastIndexOf("."));
+				var ext = document.getElementById("ext").value=extStr;
+
+				//-- Elimino estensione
+				pos = fileNameStr.lastIndexOf(".");
+				fileNameStr = fileNameStr.substr(0, pos);
+				fileName.value = fileNameStr; //Elimino estensione
+				
+				//Estensione
+				/*
+					Generare in automatico l'estensione. 
+				*/
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+    <form name="form_link" method="post" action="Download.php">
+        <input type="text" name="url_pagina" size="150" placeholder="URL Pagina" /> <br>
+        <input id = "file_name_url" tipe="text" name="url_video" size="100" placeholder="URL Video"/> <br>
+        <input id = "file_name" type="text" name="file_name" size ="50" placeholder="Nome del file"> 
+        <button type = "button" onclick="generaNome()" name="genera_nome" value="GeneraNome"> Genera nome file </button><br>
+        <select id="ext" name="ext">
+			<option value=".mp4">.mp4</option>
+		  	<option value=".mkv">.mkv</option>
+		  	<option value=".avi">.avi</option>
+		</select> <br>
+        <input type="submit" name="button_download" value="Download"/>
+    </form>
+    
+</body>
+</html>
